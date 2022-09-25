@@ -5,11 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.cryptocourse.databinding.FragmentListBinding
+import com.example.cryptocourse.databinding.FragmentCoinlistBinding
 
 class CoinListFragment : Fragment() {
 
-    private var _binding: FragmentListBinding? = null
+    private var _binding: FragmentCoinlistBinding? = null
 
     private val binding get() = _binding!!
 
@@ -18,7 +18,7 @@ class CoinListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentListBinding.inflate(inflater, container, false)
+        _binding = FragmentCoinlistBinding.inflate(inflater, container, false)
         return binding.root
     }
 
