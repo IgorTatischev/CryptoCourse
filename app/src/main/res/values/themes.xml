@@ -26,6 +26,5 @@
     </style>
 
     <style name="Theme.CryptoCource.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="Theme.CryptoCource.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

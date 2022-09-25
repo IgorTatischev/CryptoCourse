@@ -11,7 +11,6 @@
         android:id="@+id/appBarLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.CryptoCource.AppBarOverlay"
         android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,9 +18,11 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
+            android:tooltipText="@string/app_name"
+            app:titleTextColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:popupTheme="@style/Theme.CryptoCource.PopupOverlay" />
+            />
 
         <com.google.android.material.chip.ChipGroup
             android:layout_width="match_parent"
@@ -65,6 +66,7 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

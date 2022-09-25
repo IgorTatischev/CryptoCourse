@@ -5,10 +5,11 @@
     <string name="chip1">USD</string>
     <string name="chip2">EUR</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="first_fragment_label">Список криптовалют</string>
+    <string name="second_fragment_label">Name</string>
+    <!-- item layout -->
+    <string name="coin_name">Name</string>
+    <string name="coin_short">NM</string>
+    <string name="coin_price">$25,500.55</string>
+    <string name="coin_index">+5.05%</string>
 </resources>
