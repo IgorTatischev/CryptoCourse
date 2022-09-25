@@ -1,9 +1,11 @@
-package com.example.cryptocourse.listFragment
+package com.example.cryptocourse.coinListFragment
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cryptocourse.R
@@ -12,7 +14,7 @@ import com.example.cryptocourse.model.CoinItem
 
 class CoinListAdapter: RecyclerView.Adapter<CoinListAdapter.ViewHolder>() {
 
-    private var coinList = emptyList<CoinItem>()
+    private var coinList = ArrayList<CoinItem>()
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         private val binding = CoinItemBinding.bind(itemView)
@@ -21,6 +23,15 @@ class CoinListAdapter: RecyclerView.Adapter<CoinListAdapter.ViewHolder>() {
                 Glide.with(itemView.context).load(item.image).into(imageCoin)
                 coinName.text = item.name
                 coinShort.text = item.symbol.uppercase()
+                coinPrice.text =StringBuilder("$" + item.current_price.toString())
+                if (item.price_change_percentage_24h > 0){
+                    coinIndex.text = StringBuilder("+" + item.price_change_percentage_24h.toString() + "%")
+                    coinIndex.setTextColor(ContextCompat.getColor(itemView.context,android.R.color.holo_green_dark))
+                }
+                else{
+                    coinIndex.text = StringBuilder(item.price_change_percentage_24h.toString() + "%")
+                    coinIndex.setTextColor(ContextCompat.getColor(itemView.context,android.R.color.holo_red_dark))
+                }
             }
         }
     }
@@ -38,10 +49,9 @@ class CoinListAdapter: RecyclerView.Adapter<CoinListAdapter.ViewHolder>() {
         return  coinList.size
     }
 
-
     @SuppressLint("NotifyDataSetChanged")
     fun update(coinList: List<CoinItem>){
-        this.coinList = coinList
+        this.coinList = coinList as ArrayList<CoinItem>
         notifyDataSetChanged()
     }
 }
