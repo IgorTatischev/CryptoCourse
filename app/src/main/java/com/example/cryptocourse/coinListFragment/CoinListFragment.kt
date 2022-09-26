@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cryptocourse.R
 import com.example.cryptocourse.databinding.FragmentCoinlistBinding
 
 class CoinListFragment : Fragment() {
@@ -22,6 +23,21 @@ class CoinListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         _binding = FragmentCoinlistBinding.inflate(inflater, container, false)
+                binding.chipgroup.setOnCheckedStateChangeListener { group, id ->
+            when(group.checkedChipId){
+                R.id.chip1 -> {
+                    createUSD();
+                }
+                R.id.chip2 -> {
+                    createEUR();
+                }
+            }
+
+        }
+        return binding.root
+    }
+
+    private fun createUSD(){
         val viewModel = ViewModelProvider(this)[CoinListViewModel::class.java]
         recyclerView = binding.listcoin
         adapter = CoinListAdapter()
@@ -30,12 +46,17 @@ class CoinListFragment : Fragment() {
         viewModel.coinsList.observe(viewLifecycleOwner) { list ->
             list.body()?.let { adapter.update(it) }
         }
-        return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    private fun createEUR(){
+        val viewModel = ViewModelProvider(this)[CoinListViewModel::class.java]
+        recyclerView = binding.listcoin
+        adapter = CoinListAdapter()
+        recyclerView.adapter = adapter
+        viewModel.getCoinsListEUR()
+        viewModel.coinsList.observe(viewLifecycleOwner) { list ->
+            list.body()?.let { adapter.update(it) }
+        }
     }
 
     override fun onDestroyView() {

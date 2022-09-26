@@ -1,4 +1,4 @@
-package com.example.cryptocourse.model
+package com.example.cryptocourse.model.coins
 
 data class CoinItem(
     val id: String,
