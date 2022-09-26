@@ -1,4 +1,4 @@
-package com.example.cryptocourse
+package com.example.cryptocourse.main
 
 
 import android.os.Bundle
@@ -8,6 +8,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.example.cryptocourse.R
 
 import com.example.cryptocourse.databinding.ActivityMainBinding
 

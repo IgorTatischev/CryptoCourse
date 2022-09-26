@@ -7,17 +7,20 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.example.cryptocourse.coinListFragment.CoinListFragment"
+        android:name="com.example.cryptocourse.main.coinListFragment.CoinListFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_coinlist">
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
+        <argument
+            android:name="idCoin"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.example.cryptocourse.descriptionFragment.DescriptionFragment"
+        android:name="com.example.cryptocourse.main.DescriptionFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_description">
 

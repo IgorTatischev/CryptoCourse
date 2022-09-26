@@ -1,4 +1,4 @@
-package com.example.cryptocourse.coinListFragment
+package com.example.cryptocourse.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +9,7 @@ import com.example.cryptocourse.model.descriptions.Description
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class CoinListViewModel : ViewModel() {
+class CoinViewModel : ViewModel() {
 
     var repo = RepositoryHelper()
     val coinsList : MutableLiveData<Response<Coin>> = MutableLiveData()
@@ -27,7 +27,7 @@ class CoinListViewModel : ViewModel() {
         }
     }
 
-   fun  getDescription(id: String){
+   fun  getDescription(id: String?){
        viewModelScope.launch {
            description.value = repo.getTextDescription(id)
        }

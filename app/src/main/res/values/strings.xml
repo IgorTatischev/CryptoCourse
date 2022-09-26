@@ -12,4 +12,7 @@
     <string name="coin_short">NM</string>
     <string name="coin_price">$25,500.55</string>
     <string name="coin_index">+5.05%</string>
+    <!-- description layout -->
+    <string name="headerDescription">Описание</string>
+    <string name="headerCategories">Категории</string>
 </resources>

@@ -15,5 +15,5 @@ interface ApiService {
     suspend fun getCoinsEUR(): Response<Coin>
 
     @GET("{id}?localization=false&tickers=false&market_data=false&community_data=false&developer_data=false")
-    suspend fun getCoinDescription(@Path("id") id : String) : Response<Description>
+    suspend fun getCoinDescription(@Path("id") id : String?) : Response<Description>
 }

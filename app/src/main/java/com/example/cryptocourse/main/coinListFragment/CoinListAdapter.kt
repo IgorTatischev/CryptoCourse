@@ -1,12 +1,12 @@
-package com.example.cryptocourse.coinListFragment
+package com.example.cryptocourse.main.coinListFragment
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cryptocourse.R
@@ -33,10 +33,11 @@ class CoinListAdapter: RecyclerView.Adapter<CoinListAdapter.ViewHolder>() {
                     coinIndex.text = StringBuilder(item.price_change_percentage_24h.toString() + "%")
                     coinIndex.setTextColor(ContextCompat.getColor(itemView.context,android.R.color.holo_red_dark))
                 }
-//                itemView.setOnClickListener {
-//                    //Navigation.createNavigateOnClickListener(R.id.action_FirstFragment_to_SecondFragment)
-//                    //NavHostFragment.findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-//                }
+                itemView.setOnClickListener{
+                    val bundle = Bundle()
+                    bundle.putString("idCoin",item.id)
+                    Navigation.findNavController(it).navigate(R.id.action_FirstFragment_to_SecondFragment,bundle)
+                }
             }
         }
     }
@@ -48,9 +49,6 @@ class CoinListAdapter: RecyclerView.Adapter<CoinListAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(coinList[position])
-        holder.itemView.setOnClickListener(
-            Navigation.createNavigateOnClickListener(R.id.action_FirstFragment_to_SecondFragment)
-        )
     }
 
     override fun getItemCount(): Int {

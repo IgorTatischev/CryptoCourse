@@ -14,7 +14,7 @@ class RepositoryHelper {
         return RetrofitInstance.api.getCoinsEUR()
     }
 
-    suspend fun  getTextDescription(id: String): Response<Description>{
+    suspend fun  getTextDescription(id: String?): Response<Description>{
         return RetrofitInstance.api.getCoinDescription(id)
     }
 }

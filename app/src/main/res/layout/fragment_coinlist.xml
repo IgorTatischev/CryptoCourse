@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".coinListFragment.CoinListFragment">
+    tools:context=".main.coinListFragment.CoinListFragment">
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -32,7 +32,6 @@
             android:layout_height="wrap_content"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            app:checkedChip="@id/chip1"
             app:singleLine="true"
             app:singleSelection="true">
 
