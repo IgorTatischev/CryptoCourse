@@ -16,15 +16,19 @@ import com.example.cryptocourse.model.coins.CoinItem
 class CoinListAdapter: RecyclerView.Adapter<CoinListAdapter.ViewHolder>() {
 
     private var coinList = ArrayList<CoinItem>()
+    private var isUsd = true
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         private val binding = CoinItemBinding.bind(itemView)
-        fun bind(item: CoinItem) {
+        fun bind(item: CoinItem, isUsd : Boolean) {
             binding.apply {
                 Glide.with(itemView.context).load(item.image).into(imageCoin)
                 coinName.text = item.name
                 coinShort.text = item.symbol.uppercase()
-                coinPrice.text =StringBuilder("$" + item.current_price.toString())
+                if (isUsd)
+                    coinPrice.text =StringBuilder("$" + item.current_price.toString())
+                else
+                    coinPrice.text =StringBuilder("\u20ac" + item.current_price.toString())
                 if (item.price_change_percentage_24h > 0){
                     coinIndex.text = StringBuilder("+" + item.price_change_percentage_24h.toString() + "%")
                     coinIndex.setTextColor(ContextCompat.getColor(itemView.context,android.R.color.holo_green_dark))
@@ -36,7 +40,7 @@ class CoinListAdapter: RecyclerView.Adapter<CoinListAdapter.ViewHolder>() {
                 itemView.setOnClickListener{
                     val bundle = Bundle()
                     bundle.putString("idCoin",item.id)
-                    Navigation.findNavController(it).navigate(R.id.action_FirstFragment_to_SecondFragment,bundle)
+                    Navigation.findNavController(it).navigate(R.id.action_LirstFragment_to_DescriptionFragment,bundle)
                 }
             }
         }
@@ -48,7 +52,7 @@ class CoinListAdapter: RecyclerView.Adapter<CoinListAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(coinList[position])
+        holder.bind(coinList[position],isUsd)
     }
 
     override fun getItemCount(): Int {
@@ -56,8 +60,9 @@ class CoinListAdapter: RecyclerView.Adapter<CoinListAdapter.ViewHolder>() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun update(coinList: List<CoinItem>){
+    fun update(coinList: List<CoinItem>, isUsd: Boolean){
         this.coinList = coinList as ArrayList<CoinItem>
+        this.isUsd = isUsd
         notifyDataSetChanged()
     }
 }

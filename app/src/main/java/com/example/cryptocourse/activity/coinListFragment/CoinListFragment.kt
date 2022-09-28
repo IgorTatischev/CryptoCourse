@@ -1,15 +1,16 @@
 package com.example.cryptocourse.activity.coinListFragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptocourse.R
-import com.example.cryptocourse.databinding.FragmentCoinlistBinding
 import com.example.cryptocourse.activity.CoinViewModel
+import com.example.cryptocourse.databinding.FragmentCoinlistBinding
 
 class CoinListFragment : Fragment() {
 
@@ -18,9 +19,15 @@ class CoinListFragment : Fragment() {
 
     private lateinit var  recyclerView: RecyclerView
     lateinit var  adapter: CoinListAdapter
+    private val viewModel: CoinViewModel by viewModels()
+    var isUsd = true
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.setCoinsListUSD("chips")
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         _binding = FragmentCoinlistBinding.inflate(inflater, container, false)
         return binding.root
@@ -28,35 +35,44 @@ class CoinListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.progressBar.visibility = View.VISIBLE
-        val viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
-        recyclerView = binding.listcoin
-        adapter = CoinListAdapter()
-        recyclerView.adapter = adapter
-
         binding.chipgroup.setOnCheckedStateChangeListener { group, id ->
             when(group.checkedChipId){
                 R.id.chip1 -> {
-                    viewModel.getCoinsListUSD()
-                    viewModel.coinsList.observe(viewLifecycleOwner) { list ->
-                        list.body()?.let { adapter.update(it) }
-                        binding.progressBar.visibility = View.GONE
-                    }
+                    viewModel.setCoinsListUSD("chips")
+                    isUsd = true
+                    progressLoad()
                 }
                 R.id.chip2 -> {
-                    viewModel.getCoinsListEUR()
-                    viewModel.coinsList.observe(viewLifecycleOwner) { list ->
-                        list.body()?.let { adapter.update(it) }
-                        binding.progressBar.visibility = View.GONE
-                    }
+                    progressLoad()
+                    viewModel.setCoinsListEUR("chips")
+                    isUsd = false
+                    progressLoad()
                 }
+            }
+        }
+        recyclerView = binding.listcoin
+        adapter = CoinListAdapter()
+        recyclerView.adapter = adapter
+        progressLoad()
+        viewModel.coinsList.observe(viewLifecycleOwner) { list ->
+            list.body()?.let { adapter.update(it,isUsd) }
+            binding.progressBar.visibility = View.GONE
+            binding.listcoin.visibility = View.VISIBLE
+        }
+        viewModel.exception.observe(viewLifecycleOwner) { ex ->
+            if (ex == "create"){
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_ListFragment_to_retryFragment)
+            }
+            else if(ex == "refresh"){
+                //snackbar
             }
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        binding.chipgroup.check(binding.chip1.id)
+    private fun progressLoad(){
+        binding.progressBar.visibility = View.VISIBLE
+        binding.listcoin.visibility = View.GONE
     }
 
     override fun onDestroyView() {

@@ -4,7 +4,7 @@ import com.example.cryptocourse.model.coins.Coin
 import com.example.cryptocourse.model.descriptions.Description
 import retrofit2.Response
 
-class RepositoryHelper {
+class Repository {
 
     suspend fun getListUSD(): Response<Coin> {
         return RetrofitInstance.api.getCoinsUSD()

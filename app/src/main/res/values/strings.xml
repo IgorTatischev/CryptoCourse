@@ -15,4 +15,8 @@
     <!-- description layout -->
     <string name="headerDescription">Описание</string>
     <string name="headerCategories">Категории</string>
+    <!-- retry layout -->
+    <string name="buttonRetry">Попробовать</string>
+    <string name="errorDescription">Случилась какая-то ошибка :(
+        Попробуем снова</string>
 </resources>

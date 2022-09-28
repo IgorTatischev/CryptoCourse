@@ -3,29 +3,67 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/ListFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
+        android:id="@+id/ListFragment"
         android:name="com.example.cryptocourse.activity.coinListFragment.CoinListFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_coinlist">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-        <argument
-            android:name="idCoin"
-            app:argType="string" />
+            android:id="@+id/action_LirstFragment_to_DescriptionFragment"
+            app:destination="@id/DescriptionFragment" />
+        <action
+            android:id="@+id/action_ListFragment_to_retryFragment"
+            app:destination="@id/retryFragment" >
+            <argument
+                android:name="nameFragment"
+                android:defaultValue="list" />
+        </action>
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
+        android:id="@+id/DescriptionFragment"
         android:name="com.example.cryptocourse.activity.DescriptionFragment"
-        android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_description">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_DescriptionFragment_to_ListFragment"
+            app:destination="@id/ListFragment" />
+        <argument
+            android:name="idCoin"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_DescriptionFragment_to_retryFragment"
+            app:destination="@id/retryFragment"
+            app:popUpTo="@id/DescriptionFragment"
+            app:popUpToInclusive="true">
+            <argument
+                android:name="nameFragment"
+                android:defaultValue="description" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/retryFragment"
+        android:name="com.example.cryptocourse.activity.RetryFragment"
+        tools:layout="@layout/fragment_retry"
+        app:popUpTo="@id/retryFragment"
+        app:popUpToInclusive="true">
+        <action
+            android:id="@+id/action_retryFragment_to_DescriptionFragment"
+            app:destination="@id/DescriptionFragment"
+            app:popUpTo="@id/retryFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_retryFragment_to_ListFragment"
+            app:destination="@id/ListFragment"
+            app:popUpTo="@id/retryFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="nameFragment"
+            app:argType="string" />
+        <argument
+            android:name="idCoin"
+            app:argType="string" />
     </fragment>
 </navigation>

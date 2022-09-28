@@ -8,18 +8,23 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="FirstFragment">
+                  <entry key="DescriptionFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-2227" />
-                            <option name="y" value="-26" />
+                            <option name="x" value="-1867" />
+                            <option name="y" value="-63" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_FirstFragment_to_SecondFragment">
+                            <entry key="action_DescriptionFragment_to_retryFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_SecondFragment_to_FirstFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -29,18 +34,49 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="SecondFragment">
+                  <entry key="ListFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-1993" />
-                            <option name="y" value="-27" />
+                            <option name="x" value="-2396" />
+                            <option name="y" value="-76" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_SecondFragment_to_FirstFragment">
+                            <entry key="action_FirstFragment_to_SecondFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_ListFragment_to_retryFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="retryFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-2117" />
+                            <option name="y" value="-410" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_retryFragment_to_DescriptionFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_retryFragment_to_ListFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
