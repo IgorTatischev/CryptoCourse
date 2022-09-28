@@ -1,5 +1,6 @@
 package com.example.cryptocourse.activity.coinListFragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptocourse.R
-import com.example.cryptocourse.activity.CoinViewModel
+import com.example.cryptocourse.data.CoinViewModel
 import com.example.cryptocourse.databinding.FragmentCoinlistBinding
+import com.google.android.material.snackbar.Snackbar
 
 class CoinListFragment : Fragment() {
 
@@ -35,37 +37,48 @@ class CoinListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.chipgroup.setOnCheckedStateChangeListener { group, id ->
+        binding.chipgroup.setOnCheckedStateChangeListener { group, _ ->
             when(group.checkedChipId){
                 R.id.chip1 -> {
+                    progressLoad()
                     viewModel.setCoinsListUSD("chips")
                     isUsd = true
-                    progressLoad()
                 }
                 R.id.chip2 -> {
                     progressLoad()
                     viewModel.setCoinsListEUR("chips")
                     isUsd = false
-                    progressLoad()
                 }
             }
+        }
+        val swipeRefreshLayout = binding.swipeRefreshLayout
+        swipeRefreshLayout.setOnRefreshListener {
+            if (isUsd) viewModel.setCoinsListUSD("swipe")
+            else viewModel.setCoinsListEUR("swipe")
         }
         recyclerView = binding.listcoin
         adapter = CoinListAdapter()
         recyclerView.adapter = adapter
         progressLoad()
+
         viewModel.coinsList.observe(viewLifecycleOwner) { list ->
             list.body()?.let { adapter.update(it,isUsd) }
             binding.progressBar.visibility = View.GONE
             binding.listcoin.visibility = View.VISIBLE
+            binding.swipeRefreshLayout.isRefreshing = false
         }
+
         viewModel.exception.observe(viewLifecycleOwner) { ex ->
             if (ex == "create"){
                 Navigation.findNavController(view)
                     .navigate(R.id.action_ListFragment_to_retryFragment)
             }
             else if(ex == "refresh"){
-                //snackbar
+                val snackbar = Snackbar.make(view, resources.getString(R.string.errorSnackBar) ,Snackbar.LENGTH_SHORT)
+                    .setBackgroundTint(Color.parseColor("#FF5252"))
+                    .setTextColor(Color.parseColor("#FFFFFF"))
+                snackbar.show()
+                binding.swipeRefreshLayout.isRefreshing = false
             }
         }
     }

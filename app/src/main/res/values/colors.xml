@@ -9,6 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="main">#FFC107</color>
     <color name="main2">#FFA000</color>
-    <color name="chipcolor">#FFECB3</color>
+    <color name="chip">#FFECB3</color>
     <color name="def">#BDBDBD</color>
 </resources>

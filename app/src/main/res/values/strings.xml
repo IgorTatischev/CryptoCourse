@@ -19,4 +19,5 @@
     <string name="buttonRetry">Попробовать</string>
     <string name="errorDescription">Случилась какая-то ошибка :(
         Попробуем снова</string>
+    <string name="errorSnackBar">Произошла ошибка при загрузке</string>
 </resources>

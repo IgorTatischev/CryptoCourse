@@ -1,9 +1,8 @@
-package com.example.cryptocourse.activity
+package com.example.cryptocourse.data
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cryptocourse.data.Repository
 import com.example.cryptocourse.model.coins.Coin
 import com.example.cryptocourse.model.descriptions.Description
 import kotlinx.coroutines.launch
