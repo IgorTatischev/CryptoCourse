@@ -30,3 +30,13 @@ data class Description(
     val status_updates: List<Any>,
     val symbol: String
 )
+
+data class DescriptionX(
+    val en: String
+)
+
+data class Image(
+    val large: String,
+    val small: String,
+    val thumb: String
+)

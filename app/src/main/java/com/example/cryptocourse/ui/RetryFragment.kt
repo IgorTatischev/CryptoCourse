@@ -1,4 +1,4 @@
-package com.example.cryptocourse.activity
+package com.example.cryptocourse.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater

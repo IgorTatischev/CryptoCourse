@@ -1,4 +1,4 @@
-package com.example.cryptocourse.activity.coinListFragment
+package com.example.cryptocourse.ui.coinListFragment
 
 import android.graphics.Color
 import android.os.Bundle
@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptocourse.R
-import com.example.cryptocourse.data.CoinViewModel
+import com.example.cryptocourse.ui.CoinViewModel
 import com.example.cryptocourse.databinding.FragmentCoinlistBinding
 import com.google.android.material.snackbar.Snackbar
 

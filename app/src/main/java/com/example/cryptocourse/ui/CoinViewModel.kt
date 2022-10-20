@@ -1,8 +1,10 @@
-package com.example.cryptocourse.data
+package com.example.cryptocourse.ui
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cryptocourse.data.Repository
 import com.example.cryptocourse.model.coins.Coin
 import com.example.cryptocourse.model.descriptions.Description
 import kotlinx.coroutines.launch
@@ -11,15 +13,21 @@ import retrofit2.Response
 class CoinViewModel : ViewModel() {
 
     var repo = Repository()
-    val coinsList : MutableLiveData<Response<Coin>> = MutableLiveData()
-    val description : MutableLiveData<Response<Description>> = MutableLiveData()
-    val exception : MutableLiveData<String> = MutableLiveData()
+
+    private  val _coinsList : MutableLiveData<Response<Coin>> = MutableLiveData()
+    val coinsList : LiveData<Response<Coin>> = _coinsList
+
+    private val _description : MutableLiveData<Response<Description>> = MutableLiveData()
+    val description : LiveData<Response<Description>> = _description
+
+    private val _exception : MutableLiveData<String> = MutableLiveData()
+    val exception : LiveData<String> = _exception
 
     fun setCoinsListUSD(root: String?){
         viewModelScope.launch {
             try {
                 if (repo.getListUSD().body()?.size!! > 0) {
-                    coinsList.value = repo.getListUSD()
+                    _coinsList.value = repo.getListUSD()
                 }
                 else {
                     if (root == "chips") setException("create")
@@ -37,7 +45,7 @@ class CoinViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 if (repo.getListEUR().body()?.size!! > 0) {
-                    coinsList.value = repo.getListEUR()
+                    _coinsList.value = repo.getListEUR()
                 }
                 else {
                     if (root == "chips") setException("create")
@@ -55,7 +63,7 @@ class CoinViewModel : ViewModel() {
        viewModelScope.launch {
            try {
                if (repo.getTextDescription(id).body()?.name != null) {
-                   description.value = repo.getTextDescription(id)
+                   _description.value = repo.getTextDescription(id)
                }
                else {
                    setException("exception")
@@ -68,6 +76,6 @@ class CoinViewModel : ViewModel() {
    }
 
     private fun setException(ex : String){
-        exception.value = ex
+        _exception.value = ex
     }
 }

@@ -1,4 +1,4 @@
-package com.example.cryptocourse.activity
+package com.example.cryptocourse.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.example.cryptocourse.R
-import com.example.cryptocourse.data.CoinViewModel
 import com.example.cryptocourse.databinding.FragmentDescriptionBinding
 
 

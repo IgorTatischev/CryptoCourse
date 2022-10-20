@@ -1,4 +1,4 @@
-package com.example.cryptocourse.activity.coinListFragment
+package com.example.cryptocourse.ui.coinListFragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle

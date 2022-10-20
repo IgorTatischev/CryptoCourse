@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/ListFragment"
-        android:name="com.example.cryptocourse.activity.coinListFragment.CoinListFragment"
+        android:name="com.example.cryptocourse.ui.coinListFragment.CoinListFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_coinlist">
 
@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/DescriptionFragment"
-        android:name="com.example.cryptocourse.activity.DescriptionFragment"
+        android:name="com.example.cryptocourse.ui.DescriptionFragment"
         tools:layout="@layout/fragment_description">
 
         <action
@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/retryFragment"
-        android:name="com.example.cryptocourse.activity.RetryFragment"
+        android:name="com.example.cryptocourse.ui.RetryFragment"
         tools:layout="@layout/fragment_retry"
         app:popUpTo="@id/retryFragment"
         app:popUpToInclusive="true">
