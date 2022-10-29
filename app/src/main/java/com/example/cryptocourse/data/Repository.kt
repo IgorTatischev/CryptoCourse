@@ -7,14 +7,14 @@ import retrofit2.Response
 class Repository {
 
     suspend fun getListUSD(): Response<Coin> {
-        return RetrofitInstance.api.getCoinsUSD()
+        return RetrofitClient.instance.getCoinsUSD()
     }
 
     suspend fun getListEUR(): Response<Coin> {
-        return RetrofitInstance.api.getCoinsEUR()
+        return RetrofitClient.instance.getCoinsEUR()
     }
 
     suspend fun  getTextDescription(id: String?): Response<Description>{
-        return RetrofitInstance.api.getCoinDescription(id)
+        return RetrofitClient.instance.getCoinDescription(id)
     }
 }

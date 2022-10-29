@@ -5,11 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.example.cryptocourse.R
 import com.example.cryptocourse.databinding.FragmentDescriptionBinding
+import kotlinx.coroutines.launch
 
 
 class DescriptionFragment : Fragment() {
@@ -31,17 +35,23 @@ class DescriptionFragment : Fragment() {
         binding.linerlayout.visibility = View.GONE
         binding.progressBar2.visibility = View.VISIBLE
         viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
-        viewModel.setDescription(idCoin)
-        viewModel.description.observe(viewLifecycleOwner) { description ->
-            description.body()?.let {
-                Glide.with(this).load(it.image.large).into(binding.imageView)
-                binding.textDescription.text = it.description.en
-                binding.textCategories.text = it.categories.joinToString()
-                (activity as MainActivity).supportActionBar?.title = it.name
-                binding.progressBar2.visibility = View.GONE
-                binding.linerlayout.visibility = View.VISIBLE
-            }
+        viewModel.getDescription(idCoin)
+
+        lifecycleScope.launch {
+            viewModel.description
+                .flowWithLifecycle(lifecycle,Lifecycle.State.STARTED)
+                .collect { description ->
+                    description.body()?.let {
+                        Glide.with(this@DescriptionFragment).load(it.image.large).into(binding.imageView)
+                        binding.textDescription.text = it.description.en
+                        binding.textCategories.text = it.categories.joinToString()
+                        (activity as MainActivity).supportActionBar?.title = it.name
+                        binding.progressBar2.visibility = View.GONE
+                        binding.linerlayout.visibility = View.VISIBLE
+                    }
+                }
         }
+
         viewModel.exception.observe(viewLifecycleOwner){ ex ->
             if (ex == "exception") {
                 val bundle = Bundle()

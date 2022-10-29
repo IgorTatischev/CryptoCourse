@@ -26,7 +26,7 @@ class CoinListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.setCoinsListUSD("chips")
+        viewModel.getCoinsListUSD("chips")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -41,20 +41,20 @@ class CoinListFragment : Fragment() {
             when(group.checkedChipId){
                 R.id.chip1 -> {
                     progressLoad()
-                    viewModel.setCoinsListUSD("chips")
+                    viewModel.getCoinsListUSD("chips")
                     isUsd = true
                 }
                 R.id.chip2 -> {
                     progressLoad()
-                    viewModel.setCoinsListEUR("chips")
+                    viewModel.getCoinsListEUR("chips")
                     isUsd = false
                 }
             }
         }
         val swipeRefreshLayout = binding.swipeRefreshLayout
         swipeRefreshLayout.setOnRefreshListener {
-            if (isUsd) viewModel.setCoinsListUSD("swipe")
-            else viewModel.setCoinsListEUR("swipe")
+            if (isUsd) viewModel.getCoinsListUSD("swipe")
+            else viewModel.getCoinsListEUR("swipe")
         }
         recyclerView = binding.listcoin
         adapter = CoinListAdapter()
