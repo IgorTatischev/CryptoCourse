@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cryptocourse.data.Repository
-import com.example.cryptocourse.model.coins.Coin
+import com.example.cryptocourse.model.coins.Coins
 import com.example.cryptocourse.model.descriptions.Description
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
@@ -16,8 +16,8 @@ class CoinViewModel : ViewModel() {
 
     var repo = Repository()
 
-    private  val _coinsList : MutableLiveData<Response<Coin>> = MutableLiveData()
-    val coinsList : LiveData<Response<Coin>> = _coinsList
+    private  val _coinsList : MutableLiveData<Response<Coins>> = MutableLiveData()
+    val coinsList : LiveData<Response<Coins>> = _coinsList
 
     private val _description = MutableSharedFlow<Response<Description>>(replay = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST)

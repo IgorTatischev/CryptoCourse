@@ -8,10 +8,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptocourse.R
 import com.example.cryptocourse.ui.CoinViewModel
 import com.example.cryptocourse.databinding.FragmentCoinlistBinding
+import com.example.cryptocourse.model.coins.CoinItem
 import com.google.android.material.snackbar.Snackbar
 
 class CoinListFragment : Fragment() {
@@ -20,9 +23,9 @@ class CoinListFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var  recyclerView: RecyclerView
-    lateinit var  adapter: CoinListAdapter
+    private  lateinit var  coinListAdapter: CoinListAdapter
     private val viewModel: CoinViewModel by viewModels()
-    var isUsd = true
+    private  var isUsd = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,13 +59,26 @@ class CoinListFragment : Fragment() {
             if (isUsd) viewModel.getCoinsListUSD("swipe")
             else viewModel.getCoinsListEUR("swipe")
         }
+
         recyclerView = binding.listcoin
-        adapter = CoinListAdapter()
-        recyclerView.adapter = adapter
+        coinListAdapter = CoinListAdapter(object : CoinListAdapter.Listener {
+            override fun onItemClick(coin: CoinItem) {
+                val bundle = Bundle()
+                bundle.putString("idCoin", coin.id)
+                Navigation.findNavController(view).navigate(R.id.action_LirstFragment_to_DescriptionFragment,bundle)
+            }
+        })
+
+        (recyclerView.itemAnimator as? DefaultItemAnimator)?.supportsChangeAnimations = false
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = coinListAdapter
         progressLoad()
 
         viewModel.coinsList.observe(viewLifecycleOwner) { list ->
-            list.body()?.let { adapter.update(it,isUsd) }
+            list.body()?.let {
+                coinListAdapter.update(isUsd)
+                coinListAdapter.submitList(it)
+            }
             binding.progressBar.visibility = View.GONE
             binding.listcoin.visibility = View.VISIBLE
             binding.swipeRefreshLayout.isRefreshing = false
