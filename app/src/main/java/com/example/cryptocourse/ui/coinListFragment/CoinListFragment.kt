@@ -7,15 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptocourse.R
-import com.example.cryptocourse.ui.CoinViewModel
 import com.example.cryptocourse.databinding.FragmentCoinlistBinding
 import com.example.cryptocourse.model.coins.CoinItem
+import com.example.cryptocourse.ui.CoinViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 
 class CoinListFragment : Fragment() {
 
@@ -74,14 +78,18 @@ class CoinListFragment : Fragment() {
         recyclerView.adapter = coinListAdapter
         progressLoad()
 
-        viewModel.coinsList.observe(viewLifecycleOwner) { list ->
-            list.body()?.let {
-                coinListAdapter.update(isUsd)
-                coinListAdapter.submitList(it)
-            }
-            binding.progressBar.visibility = View.GONE
-            binding.listcoin.visibility = View.VISIBLE
-            binding.swipeRefreshLayout.isRefreshing = false
+        lifecycleScope.launch {
+            viewModel.coinsList
+                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .collect { list ->
+                    list.body()?.let {
+                        coinListAdapter.update(isUsd)
+                        coinListAdapter.submitList(it)
+                    }
+                    binding.progressBar.visibility = View.GONE
+                    binding.listcoin.visibility = View.VISIBLE
+                    binding.swipeRefreshLayout.isRefreshing = false
+                }
         }
 
         viewModel.exception.observe(viewLifecycleOwner) { ex ->

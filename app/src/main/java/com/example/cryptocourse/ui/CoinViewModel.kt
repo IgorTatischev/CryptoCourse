@@ -8,7 +8,9 @@ import com.example.cryptocourse.data.Repository
 import com.example.cryptocourse.model.coins.Coins
 import com.example.cryptocourse.model.descriptions.Description
 import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -16,8 +18,9 @@ class CoinViewModel : ViewModel() {
 
     var repo = Repository()
 
-    private  val _coinsList : MutableLiveData<Response<Coins>> = MutableLiveData()
-    val coinsList : LiveData<Response<Coins>> = _coinsList
+    private  val _coinsList = MutableSharedFlow<Response<Coins>>(replay = 1,
+    onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    val coinsList : SharedFlow<Response<Coins>> = _coinsList.asSharedFlow()
 
     private val _description = MutableSharedFlow<Response<Description>>(replay = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST)
@@ -30,7 +33,7 @@ class CoinViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 if (repo.getListUSD().body()?.size!! > 0) {
-                    _coinsList.value = repo.getListUSD()
+                    _coinsList.emit(repo.getListEUR())
                 }
                 else {
                     if (root == "chips") setException("create")
@@ -48,7 +51,7 @@ class CoinViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 if (repo.getListEUR().body()?.size!! > 0) {
-                    _coinsList.value = repo.getListEUR()
+                    _coinsList.emit(repo.getListEUR())
                 }
                 else {
                     if (root == "chips") setException("create")
